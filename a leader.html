@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leadership in the Pentagon — Interactive Summary</title>
+<style>
+  :root{
+    --bg:#07111f; --bg2:#0b1730; --card:rgba(255,255,255,.08); --line:rgba(255,255,255,.14);
+    --text:#f4f7fb; --muted:#b8c4d6; --accent:#7dd3fc; --accent2:#a78bfa; --accent3:#34d399;
+    --shadow: 0 20px 60px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at top left, #14305e 0, transparent 32%),
+      radial-gradient(circle at top right, #2b1658 0, transparent 28%),
+      linear-gradient(160deg,var(--bg),var(--bg2));
+    min-height:100vh;
+  }
+  .wrap{max-width:1200px; margin:0 auto; padding:32px 20px 48px}
+  .hero{display:grid; grid-template-columns:1.3fr .9fr; gap:22px; align-items:stretch}
+  .panel{
+    background:var(--card);
+    border:1px solid var(--line);
+    backdrop-filter: blur(14px);
+    border-radius:24px;
+    box-shadow:var(--shadow);
+  }
+  .hero-main{padding:34px}
+  .eyebrow{
+    display:inline-flex; gap:8px; align-items:center;
+    padding:8px 12px; border:1px solid rgba(125,211,252,.35);
+    border-radius:999px; color:var(--accent);
+    font-size:13px; letter-spacing:.08em; text-transform:uppercase;
+  }
+  h1{
+    font-size:clamp(2.2rem,5vw,4.8rem);
+    line-height:.94;
+    margin:18px 0 14px;
+    letter-spacing:-.04em;
+  }
+  .lede{
+    font-size:1.05rem;
+    color:var(--muted);
+    max-width:62ch;
+    line-height:1.7;
+  }
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin-top:24px;
+  }
+  .stat{
+    padding:16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+  }
+  .stat b{display:block; font-size:1.05rem; margin-bottom:6px}
+  .stat span{color:var(--muted); font-size:.95rem; line-height:1.45}
+  .hero-side{padding:26px; display:flex; flex-direction:column; gap:14px}
+  .quote{
+    padding:18px 18px 16px;
+    border-left:3px solid var(--accent);
+    background:rgba(125,211,252,.08);
+    border-radius:18px;
+  }
+  .quote p{margin:0; color:#e8f6ff; line-height:1.6}
+  .quote small{display:block; margin-top:10px; color:var(--muted)}
+  .timeline{margin-top:22px; padding:22px}
+  .timeline-head{display:flex; justify-content:space-between; align-items:end; gap:12px; margin-bottom:18px}
+  .timeline-head h2{margin:0; font-size:1.35rem}
+  .timeline-head p{margin:0; color:var(--muted)}
+  .steps{display:grid; gap:14px}
+  .step{
+    display:grid;
+    grid-template-columns:68px 1fr auto;
+    gap:14px;
+    align-items:center;
+    padding:16px;
+    border-radius:18px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    cursor:pointer;
+    transition:transform .22s ease, background .22s ease, border-color .22s ease;
+  }
+  .step:hover{
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.08);
+    border-color:rgba(125,211,252,.4);
+  }
+  .num{
+    width:56px;
+    height:56px;
+    border-radius:16px;
+    display:grid;
+    place-items:center;
+    font-weight:700;
+    color:#05111f;
+    background:linear-gradient(135deg,var(--accent),#f0f9ff);
+  }
+  .step h3{margin:0 0 6px; font-size:1.03rem}
+  .step p{margin:0; color:var(--muted); line-height:1.55}
+  .pill{
+    padding:10px 12px;
+    border-radius:999px;
+    border:1px solid rgba(167,139,250,.35);
+    color:#d8ccff;
+    font-size:.9rem;
+    white-space:nowrap;
+  }
+  .detail{
+    margin-top:18px;
+    padding:22px;
+    display:grid;
+    grid-template-columns:1fr 320px;
+    gap:18px;
+    align-items:start;
+  }
+  .detail-card{
+    padding:22px;
+    border-radius:20px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+  }
+  .detail h3{margin:0 0 10px; font-size:1.25rem}
+  .detail p, .detail li{color:var(--muted); line-height:1.7}
+  .detail ul{margin:12px 0 0 18px}
+  .visual{
+    padding:22px;
+    border-radius:20px;
+    background:linear-gradient(180deg, rgba(125,211,252,.14), rgba(167,139,250,.08));
+    border:1px solid rgba(125,211,252,.18);
+  }
+  .ring{
+    width:210px;
+    aspect-ratio:1;
+    margin:10px auto 6px;
+    border-radius:50%;
+    background:conic-gradient(
+      var(--accent) 0 18%,
+      rgba(255,255,255,.08) 18% 36%,
+      var(--accent2) 36% 54%,
+      rgba(255,255,255,.08) 54% 72%,
+      var(--accent3) 72% 90%,
+      rgba(255,255,255,.08) 90% 100%
+    );
+    position:relative;
+    box-shadow: inset 0 0 0 18px rgba(7,17,31,.65);
+  }
+  .ring:after{
+    content:'Leadership\Athat people remember';
+    white-space:pre;
+    position:absolute;
+    inset:50%;
+    transform:translate(-50%,-50%);
+    width:132px;
+    height:132px;
+    border-radius:50%;
+    background:rgba(7,17,31,.95);
+    display:grid;
+    place-items:center;
+    text-align:center;
+    font-weight:700;
+    line-height:1.2;
+    color:#eef6ff;
+    padding:12px;
+  }
+  .footer{
+    margin-top:18px;
+    color:var(--muted);
+    text-align:center;
+    font-size:.92rem;
+  }
+  .active{
+    outline:2px solid rgba(125,211,252,.55);
+    background:rgba(125,211,252,.1)!important;
+  }
+  @media (max-width: 900px){
+    .hero,.detail{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr}
+    .step{grid-template-columns:56px 1fr}
+    .pill{grid-column:2 / -1; justify-self:start}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="panel hero-main">
+        <div class="eyebrow">Interactive summary • click each idea</div>
+        <h1>Leadership isn’t about power.<br>It’s about meaning.</h1>
+        <p class="lede">
+          This post argues that the best teams are built when leaders create purpose,
+          show respect, and make people feel trusted. Click through the ideas below
+          to explore the message piece by piece.
+        </p>
+        <div class="stats">
+          <div class="stat"><b>Mission first</b><span>People commit more when the work feels connected to something bigger.</span></div>
+          <div class="stat"><b>Respect matters</b><span>Culture is shaped by how people feel in the room, not just by policies.</span></div>
+          <div class="stat"><b>Trust grows effort</b><span>When people feel safe and valued, they naturally give more.</span></div>
+        </div>
+      </div>
+      <div class="panel hero-side">
+        <div class="quote" id="quoteBox">
+          <p id="quoteText">“It was because of the people.”</p>
+          <small id="quoteMeta">A simple line that frames the entire post.</small>
+        </div>
+        <div class="visual">
+          <div class="ring"></div>
+          <p style="text-align:center; margin:6px 0 0; color:var(--muted)">
+            A mission-centered culture creates momentum.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel timeline">
+      <div class="timeline-head">
+        <div>
+          <h2>Click through the thoughts</h2>
+          <p>Each card opens a key idea from the post.</p>
+        </div>
+        <div class="pill">5 core ideas</div>
+      </div>
+
+      <div class="steps">
+        <div class="step active" data-title="Mission creates meaning" data-copy="The post says people work harder when they understand why the work matters. A clear mission turns effort into purpose.">
+          <div class="num">01</div>
+          <div>
+            <h3>Mission creates meaning</h3>
+            <p>The work becomes more motivating when it supports a bigger goal.</p>
+          </div>
+          <div class="pill">Purpose</div>
+        </div>
+
+        <div class="step" data-title="Respect builds culture" data-copy="Respect is not cosmetic. It shapes how safe, valued, and willing people feel in the team.">
+          <div class="num">02</div>
+          <div>
+            <h3>Respect builds culture</h3>
+            <p>People respond to the way leaders treat them every day.</p>
+          </div>
+          <div class="pill">Culture</div>
+        </div>
+
+        <div class="step" data-title="Humility earns trust" data-copy="The author highlights humble leaders as the ones people remember. Humility makes leadership feel human instead of performative.">
+          <div class="num">03</div>
+          <div>
+            <h3>Humility earns trust</h3>
+            <p>Strong leaders do not need to prove their importance.</p>
+          </div>
+          <div class="pill">Trust</div>
+        </div>
+
+        <div class="step" data-title="Trust unlocks commitment" data-copy="When people feel trusted, they show up with more energy and ownership. Commitment is earned, not demanded.">
+          <div class="num">04</div>
+          <div>
+            <h3>Trust unlocks commitment</h3>
+            <p>Safety and confidence lead to stronger effort.</p>
+          </div>
+          <div class="pill">Commitment</div>
+        </div>
+
+        <div class="step" data-title="People make it personal" data-copy="The post finishes by saying the job was memorable because the people made the mission feel personal. That is the emotional core of the message.">
+          <div class="num">05</div>
+          <div>
+            <h3>People make it personal</h3>
+            <p>The mission sticks when people feel they belong to it.</p>
+          </div>
+          <div class="pill">Belonging</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel detail">
+      <div class="detail-card">
+        <h3 id="detailTitle">Mission creates meaning</h3>
+        <p id="detailCopy">
+          The post says people work harder when they understand why the work matters.
+          A clear mission turns effort into purpose.
+        </p>
+        <ul>
+          <li>Leaders should connect tasks to a larger outcome.</li>
+          <li>People want to feel their contribution matters.</li>
+          <li>Purpose increases motivation more than pressure does.</li>
+        </ul>
+      </div>
+      <div class="visual">
+        <h3 style="margin-top:0">The emotional takeaway</h3>
+        <p style="margin-bottom:0">
+          Great leadership is less about commanding performance and more about creating
+          a place where people want to contribute.
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      Built as a single-click interactive HTML summary for quick reading and presentation.
+    </div>
+  </div>
+
+<script>
+  const steps = [...document.querySelectorAll('.step')];
+  const title = document.getElementById('detailTitle');
+  const copy = document.getElementById('detailCopy');
+  const quoteText = document.getElementById('quoteText');
+  const quoteMeta = document.getElementById('quoteMeta');
+
+  const quotes = {
+    'Mission creates meaning': ['“People want to know their effort matters.”','Purpose makes the work feel bigger than the task.'],
+    'Respect builds culture': ['“The way people feel around you becomes your culture.”','Respect is a daily leadership behavior.'],
+    'Humility earns trust': ['“The best leaders do not need to prove they are important.”','Humility lowers ego and raises confidence.'],
+    'Trust unlocks commitment': ['“People give more when they feel safe.”','Trust is the bridge between management and ownership.'],
+    'People make it personal': ['“The people made the mission feel personal.”','Belonging is what turns a job into a memory.']
+  };
+
+  steps.forEach(step => step.addEventListener('click', () => {
+    steps.forEach(s => s.classList.remove('active'));
+    step.classList.add('active');
+    title.textContent = step.dataset.title;
+    copy.textContent = step.dataset.copy;
+    quoteText.textContent = quotes[step.dataset.title][0];
+    quoteMeta.textContent = quotes[step.dataset.title][1];
+  }));
+</script>
+</body>
+</html>
